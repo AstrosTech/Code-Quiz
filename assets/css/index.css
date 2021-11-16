@@ -1,0 +1,23 @@
+* {
+    font-family:'Courier New', Courier, monospace
+}
+
+header {
+    margin: 5rem;
+    text-align: center;
+}
+
+.timer {
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    text-align: center;
+    border-style: solid;
+    margin: 1rem 2rem;
+    padding: 1rem 2rem;
+}
+
+#start-button {
+    justify-content: center;
+    align-items: center;
+}
