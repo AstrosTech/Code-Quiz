@@ -3,9 +3,52 @@
 }
 
 header {
-    margin: 5rem;
+    margin-top: 8rem;
+    margin-bottom: 4rem;
     text-align: center;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+#highscores:hover {
+    transition: all .5s;
+    transform: scale(1.1);
+    background-color: rgb(255, 0, 0)
+}
+
+#highscores {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    text-align: center;
+    border-style: solid;
+    margin: 1rem 2rem;
+    padding: 1rem 2rem;
+}
+
+#start-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-button {
+    padding: 1rem 2rem;
+    background-color: rgb(255, 0, 0)
+}
+
+
+#start-button:hover {
+    transition: all .5s;
+    transform: scale(1.1);
+    background-color: rgb(95, 250, 64)
+}
+
 
 .timer {
     position: fixed;
@@ -15,9 +58,4 @@ header {
     border-style: solid;
     margin: 1rem 2rem;
     padding: 1rem 2rem;
-}
-
-#start-button {
-    justify-content: center;
-    align-items: center;
 }
