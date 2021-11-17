@@ -1,6 +1,6 @@
-let TimerElement = document.getElementById('timer')
-let StartButton = document.getElementById('start-button')
-let QuestionElement = document.getElementById('Questions')
+let TimerElement = document.get('#timer')
+let StartButton = $('#start-button')
+let QuestionElement = $('#Questions')
 
 let Score = 0;
 let Timer = 10;
@@ -37,16 +37,26 @@ let QuestionsSet = [
     }
 ]
 
-QuestionElement.addEventListener('click', (event) => {
-    let ChoosenAnswer = event.target
-    let Parent = ChoosenAnswer.parentNode
-    let GivenQuestion = Parent.children[0]
+QuestionElement.on('click', 'li', (event) => {
+    if(!OnGoing) return;
 
-    
+    let QuestionIndex = $(event.target).parent().children().eq(0).data('question')
+    let AnswerIndex = $(event.target).data('answer')
+    let QuestionAnswered = QuestionsSet[QuestionIndex]
+
+    if(AnswerIndex == QuestionAnswered.Answer) {
+        Score++
+
+        nextQuestion()
+        return
+    }
+
+    Score--
+    Timer - 5
+    nextQuestion()
 })
 
-
-StartButton.addEventListener('click', () => {
+StartButton.on('click', () => {
     if(OnGoing) return;
 
     Questions = [...QuestionsSet]
@@ -62,30 +72,28 @@ function startQuiz() {
 }
 
 function nextQuestion() {
-    clearAnswers(QuestionElement)
+    QuestionElement.empty()
     let NewQuestion = getRandomQuestion()
     displayQuestion(NewQuestion.RandomQuestion, NewQuestion.Index)
 }
 
 function displayQuestion(QuestionObject, index) {
-    let QuestionHeader = document.createElement('h1')
-    QuestionHeader.textContent = QuestionObject.Question
-    QuestionHeader.setAttribute("data-question", index)
-    QuestionElement.appendChild(QuestionHeader)
+    let QuestionHeader = $("<h1>").text(QuestionObject.Question)
+    QuestionHeader.attr("data-question", index)
+    QuestionElement.append(QuestionHeader)
 
 
     for(let i = 0; i < QuestionObject.Options.length; i++) {
         let question = QuestionObject.Options[i]
 
-        let optionLi = document.createElement('li')
-        optionLi.textContent = question
-        optionLi.setAttribute("data-answer", i)
-        QuestionElement.appendChild(optionLi)
+        let optionLi = $("<li>").text(question)
+        optionLi.attr("data-answer", i)
+        QuestionElement.append(optionLi)
     }
 }
 
 function startTimer() {
-    TimerElement.textContent = Timer
+    TimerElement.text(Timer)
 
     Gameinterval = setInterval(() => {
         if(Timer <= 0) {
@@ -94,13 +102,13 @@ function startTimer() {
         }
 
         Timer--
-        TimerElement.textContent = Timer
+        TimerElement.text(Timer)
     }, 1000)
 }
 
 function endQuiz() {
     clearInterval(Gameinterval)
-    TimerElement.textContent = "Offline"
+    TimerElement.text("Offline")
     hideQuestion()
     showElements()
 }
@@ -109,24 +117,18 @@ function getRandomQuestion() {
     let Index = Math.floor(Math.random() * Questions.length);
     let RandomQuestion = Questions[Index]
     Questions.splice(0, Index)
-    return { RandomQuestion, Index } 
+    return {RandomQuestion, Index}
 }
 
 
 function hideElements() {
-    document.querySelector('header').classList.add("hide-container")
-    document.querySelector('#start-container').classList.add("hide-container")
+    $("header").children().hide()
+    $("#start-container").children().hide()
 }
 
 function showElements() {
-    document.querySelector('header').classList.remove("hide-container")
-    document.querySelector('#start-container').classList.remove("hide-container")
+    $("header").children().show()
+    $("#start-container").children().show()
 }
 
-function hideQuestion() { QuestionElement.style.display = "none"}
-
-function clearAnswers(parent) { 
-    while (parent.lastChild) {
-        parent.removeChild(parent.lastChild);
-    }
-}
+function hideQuestion() { QuestionElement.hide() }

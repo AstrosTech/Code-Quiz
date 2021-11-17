@@ -6,6 +6,7 @@ header {
     margin-top: 8rem;
     margin-bottom: 4rem;
     text-align: center;
+    font-weight: bold;
 }
 
 a {
@@ -15,6 +16,35 @@ a {
     padding: 0;
 }
 
+#Questions {
+    text-align: center;
+    margin: 3rem 5%;
+}
+
+#Questions ul {
+    margin: 3rem;
+    padding: 0;
+    display: inline-block;  
+    list-style-type: none;
+}
+
+#Questions li {
+    box-sizing: border-box;
+    border-style: solid;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: rgb(255, 0, 0);
+    font-weight: bold;
+    color: white;
+    font-size: x-large;
+}
+
+#Questions li:hover {
+    transition: all .2s;
+    transform: scale(1.05);
+    background-color: rgb(95, 250, 64)
+}
+
 #highscores:hover {
     transition: all .5s;
     transform: scale(1.1);
@@ -22,7 +52,7 @@ a {
 }
 
 #highscores {
-    position: fixed;
+    position: absolute;
     left: 0%;
     top: 0%;
     text-align: center;
@@ -49,13 +79,16 @@ a {
     background-color: rgb(95, 250, 64)
 }
 
-
 #timer {
-    position: fixed;
+    position: absolute;
     right: 0%;
     top: 0%;
     text-align: center;
     border-style: solid;
     margin: 1rem 2rem;
     padding: 1rem 2rem;
+}
+
+.hide-container > * {
+    display: none;
 }
