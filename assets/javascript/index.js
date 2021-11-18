@@ -1,9 +1,14 @@
 let TimerElement = document.getElementById('timer')
 let StartButton = document.getElementById('start-button')
 let QuestionElement = document.getElementById('Questions')
+let Answer = document.getElementById('Answer')
+let Form = document.getElementById('save-highscore')
+let Initials = document.getElementById('Initials')
+let SubmitInitial = document.getElementById('submit-initial')
+let FinalScoreElement = document.getElementById('final-score')
 
 let Score = 0;
-let Timer = 10;
+let Timer = 60;
 let OnGoing = false;
 let GameInterval;
 let Questions;
@@ -42,7 +47,24 @@ QuestionElement.addEventListener('click', (event) => {
     let Parent = ChoosenAnswer.parentNode
     let GivenQuestion = Parent.children[0]
 
-    
+    let QuestionIndex = GivenQuestion.dataset.question
+    let AnswerIndex = ChoosenAnswer.dataset.answer
+
+    let QuestionAnswered = QuestionsSet[QuestionIndex]
+
+    if(AnswerIndex == QuestionAnswered.Answer) {
+        showAnswer("Right!")
+        Score++
+
+        setTimeout(() => { nextQuestion() }, 200);
+        return
+    }
+
+        showAnswer("Wrong!")
+        Score--
+
+        Timer = Timer - 5
+        setTimeout(() => { nextQuestion() }, 200);
 })
 
 
@@ -64,10 +86,16 @@ function startQuiz() {
 function nextQuestion() {
     clearAnswers(QuestionElement)
     let NewQuestion = getRandomQuestion()
+    if(!NewQuestion) {
+        Timer = 0
+        endQuiz()
+        return
+    }
     displayQuestion(NewQuestion.RandomQuestion, NewQuestion.Index)
 }
 
 function displayQuestion(QuestionObject, index) {
+    Answer.style.opacity = "0"
     let QuestionHeader = document.createElement('h1')
     QuestionHeader.textContent = QuestionObject.Question
     QuestionHeader.setAttribute("data-question", index)
@@ -98,17 +126,13 @@ function startTimer() {
     }, 1000)
 }
 
-function endQuiz() {
-    clearInterval(Gameinterval)
-    TimerElement.textContent = "Offline"
-    hideQuestion()
-    showElements()
-}
 
 function getRandomQuestion() {
+    if(Questions.length == 0) return
     let Index = Math.floor(Math.random() * Questions.length);
+
     let RandomQuestion = Questions[Index]
-    Questions.splice(0, Index)
+    Questions.splice(Index, 1)
     return { RandomQuestion, Index } 
 }
 
@@ -123,10 +147,55 @@ function showElements() {
     document.querySelector('#start-container').classList.remove("hide-container")
 }
 
-function hideQuestion() { QuestionElement.style.display = "none"}
+function hideQuestion() { QuestionElement.style.display = "none" }
 
-function clearAnswers(parent) { 
-    while (parent.lastChild) {
+function clearAnswers(parent) {
+    while (parent.lastChild) { 
         parent.removeChild(parent.lastChild);
     }
+}
+
+function showAnswer(answer) {
+    Answer.style.opacity = '1'
+    Answer.textContent = answer
+}
+
+function showForm() {
+    FinalScoreElement.textContent = `Your final score is ${Score}`
+    Form.style.display = "block"
+}
+
+function hideForm() { Form.style.display = "none" }
+
+function endQuiz() {
+    Timer = 60
+    Answer.style.display = "none"
+    clearInterval(Gameinterval)
+    TimerElement.textContent = "Offline"
+    hideQuestion()
+
+    showForm()
+}
+
+SubmitInitial.addEventListener('click', () => {
+    storeScore(Initials.value)
+    hideForm()
+    showElements()
+})
+
+function storeScore(Initials) {
+    let HighScores = JSON.parse(localStorage.getItem('HighScores'))
+    if(HighScores) {
+        HighScores.push({
+            Initials,
+            Score
+        })
+        localStorage.setItem('HighScores', JSON.stringify(HighScores))
+        return
+    }
+
+    localStorage.setItem('HighScores', JSON.stringify([{
+        Initials,
+        Score
+    }]))
 }

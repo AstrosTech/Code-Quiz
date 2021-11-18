@@ -61,17 +61,35 @@ a {
     padding: 1rem 2rem;
 }
 
+#save-highscore {
+    display: none;
+    margin: 8rem 20%;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
 #start-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+#submit-initial {
+    margin: 0 1rem;
+    background-color: rgb(255, 0, 0)
+}
+
+#submit-initial:hover {
+    transition: all .5s;
+    transform: scale(1.1);
+    background-color: rgb(95, 250, 64)
+}
+
 #start-button {
     padding: 1rem 2rem;
     background-color: rgb(255, 0, 0)
 }
-
 
 #start-button:hover {
     transition: all .5s;
@@ -89,6 +107,13 @@ a {
     padding: 1rem 2rem;
 }
 
+#Answer {
+    list-style-type: none;
+    text-align: center;
+    transition: all .3s;
+}
 .hide-container > * {
     display: none;
 }
+
+
