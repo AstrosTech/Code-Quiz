@@ -15,10 +15,22 @@ header {
     justify-content: center;
     background-color: rgb(95, 250, 64);
 }
+
 ol {
     text-align: center;
 }
+
 li {
     font-weight: bold;
     font-size: x-large;
+}
+
+a {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: x-large;
+    border-style: solid;
+    padding: 1rem 2rem;
+    border-radius: 10px;
 }
